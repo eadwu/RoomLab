@@ -1,6 +1,7 @@
 package Game;
 
 import People.Person;
+import Rooms.EmptyRoom;
 import Rooms.Room;
 import Rooms.WinningRoom;
 
@@ -23,6 +24,11 @@ public class Runner {
 				building[x][y] = new Room(x,y);
 			}
 		}
+
+		//Create a random empty room.
+		int x1 = (int)(Math.random()*building.length);
+		int y1 = (int)(Math.random()*building.length);
+		building[x1][y1] = new EmptyRoom(x1, y1);
 		
 		//Create a random winning room.
 		int x = (int)(Math.random()*building.length);
