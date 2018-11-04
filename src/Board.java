@@ -204,11 +204,12 @@ public class Board {
      */
     public void move(int row, int col, char content, Entity entity) {
         Position currentPos = entity.getPosition();
+        Position newPos = normalize(row, col);
 
         this.tileAt(currentPos).setContent(' ');
         this.tileAt(currentPos).markOccupied(null);
-        this.tileAt(row, col).setContent(content);
-        this.tileAt(row, col).markOccupied(entity);
+        this.tileAt(newPos).setContent(content);
+        this.tileAt(newPos).markOccupied(entity);
     }
 
     /**
@@ -220,6 +221,36 @@ public class Board {
      */
     public void move(Position pos, char content, Entity entity) {
         this.move(pos.getX(), pos.getY(), content, entity);
+    }
+
+    /**
+     * Moves an Entity given a direction.
+     *
+     * @param direction the direction to move the Entity
+     * @param content   the symbol that represents the Entity
+     * @param entity    the Entity
+     */
+    public void move(String direction, char content, Entity entity) {
+        int dx = 0;
+        int dy = 0;
+
+        Position currentPos = entity.getPosition();
+
+        switch (direction) {
+            case "N":
+                dy = -1;
+                break;
+            case "S":
+                dy = 1;
+                break;
+            case "E":
+                dx = 1;
+                break;
+            default:
+                dx = -1;
+        }
+
+        this.move(currentPos.getX() + dx, currentPos.getY() + dy, content, entity);
     }
 
     /**
