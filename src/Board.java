@@ -195,6 +195,34 @@ public class Board {
     }
 
     /**
+     * Moves an Entity to (x, y).
+     *
+     * @param row     the x coordinate of the target Position
+     * @param col     the y coordinate of the target Position
+     * @param content the symbol that represents the Entity
+     * @param entity  the Entity
+     */
+    public void move(int row, int col, char content, Entity entity) {
+        Position currentPos = entity.getPosition();
+
+        this.tileAt(currentPos).setContent(' ');
+        this.tileAt(currentPos).markOccupied(null);
+        this.tileAt(row, col).setContent(content);
+        this.tileAt(row, col).markOccupied(entity);
+    }
+
+    /**
+     * Moves an Entity to pos.
+     *
+     * @param pos     the target Position
+     * @param content the symbol that represents the Entity
+     * @param entity  the Entity
+     */
+    public void move(Position pos, char content, Entity entity) {
+        this.move(pos.getX(), pos.getY(), content, entity);
+    }
+
+    /**
      * Edits the character on a Tile in the Board given its coordinates.
      *
      * @param row     the x position of the Tile
