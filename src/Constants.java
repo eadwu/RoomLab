@@ -5,7 +5,7 @@
  */
 public class Constants {
     /** The width of the board */
-    public static int WIDTH = 20;
+    public static int WIDTH = 10;
     /** The height of the board */
-    public static int HEIGHT = 20;
+    public static int HEIGHT = 10;
 }
