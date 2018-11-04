@@ -2,7 +2,6 @@
  * Game constants.
  *
  * @author Edmund Wu
- * @version 1.0.0
  */
 public class Constants {
     /** The width of the board */

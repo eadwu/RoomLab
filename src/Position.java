@@ -2,7 +2,6 @@
  * Represents a position on the board in the form of coordinates.
  *
  * @author Edmund Wu
- * @version 1.0.0
  */
 public class Position {
     private int x;
