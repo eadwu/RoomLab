@@ -30,6 +30,15 @@ public class Leviathan extends Entity implements Monster {
     }
 
     /**
+     * Changes Levithan's stamina by modifier.
+     *
+     * @param modifier delta between original and new stamina
+     */
+    public void setStamina(int modifier) {
+        this.stamina = this.stamina + modifier;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public void rest() {
