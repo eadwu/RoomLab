@@ -183,6 +183,17 @@ public class Board {
     }
 
     /**
+     * Performs the same as naiveNavigate(Tile, Tile), except Tiles are found through Positions.
+     *
+     * @param source      the start position
+     * @param destination the end position
+     * @return the projected next tile
+     */
+    public Tile naiveNavigate(Position source, Position destination) {
+        return this.naiveNavigate(this.tileAt(source), this.tileAt(destination));
+    }
+
+    /**
      * Performs the same as naiveNavigate(Tile, Tile) except positions are given through explicit coordinates.
      *
      * @param x0 the start node's x value
