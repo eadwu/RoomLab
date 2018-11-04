@@ -103,7 +103,7 @@ public class Board {
      * @return the tile located at (x, y)
      */
     public Tile tileAt(int x, int y) {
-        return this.internals[x][y];
+        return this.internals[y][x];
     }
 
     /**
@@ -113,7 +113,7 @@ public class Board {
      * @return the tile located at pos
      */
     public Tile tileAt(Position pos) {
-        return this.internals[pos.getX()][pos.getY()];
+        return this.internals[pos.getY()][pos.getX()];
     }
 
     /**
@@ -135,7 +135,7 @@ public class Board {
     }
 
     public Tile[] tilesAround(int x, int y) {
-        return this.tilesAround(this.tileAt(x, y));
+        return this.tilesAround(this.tileAt(y, x));
     }
 
     /**
@@ -146,8 +146,8 @@ public class Board {
      * @return the normalized Position
      */
     public Position normalize(int x, int y) {
-        int normalizedX = (x - Constants.WIDTH) % Constants.WIDTH;
-        int normalizedY = (y - Constants.HEIGHT) % Constants.HEIGHT;
+        int normalizedX = x < Constants.WIDTH && x > -1 ? x : x > Constants.WIDTH ? x - Constants.WIDTH : Constants.WIDTH + x;
+        int normalizedY = y < Constants.HEIGHT && y > -1 ? y : y > Constants.HEIGHT ? y - Constants.HEIGHT : Constants.HEIGHT + y;
 
         return new Position(normalizedX, normalizedY);
     }
@@ -206,6 +206,7 @@ public class Board {
         Position currentPos = entity.getPosition();
         Position newPos = normalize(row, col);
 
+        entity.setPosition(newPos);
         this.tileAt(currentPos).setContent(' ');
         this.tileAt(currentPos).markOccupied(null);
         this.tileAt(newPos).setContent(content);

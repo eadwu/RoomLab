@@ -31,6 +31,15 @@ public abstract class Entity {
     }
 
     /**
+     * Updates the Entity's Position.
+     *
+     * @param pos the new position
+     */
+    public void setPosition(Position pos) {
+        this.pos = pos;
+    }
+
+    /**
      * Gets the Entity's id.
      *
      * @return the id
