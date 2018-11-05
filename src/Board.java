@@ -117,6 +117,38 @@ public class Board {
     }
 
     /**
+     * Normalizes Cartesian coordinates based on board dimensions.
+     *
+     * @param x the x coordinate of the position
+     * @param y the y coordinate of the position
+     * @return the normalized Position
+     */
+    public static Position normalize(int x, int y) {
+        int normalizedX = x < Constants.WIDTH && x > -1 ? x : x > Constants.WIDTH ? x - Constants.WIDTH : Constants.WIDTH + x;
+        int normalizedY = y < Constants.HEIGHT && y > -1 ? y : y > Constants.HEIGHT ? y - Constants.HEIGHT : Constants.HEIGHT + y;
+
+        return new Position(normalizedX, normalizedY);
+    }
+
+    public Tile[] tilesAround(int x, int y) {
+        return this.tilesAround(this.tileAt(y, x));
+    }
+
+    /**
+     * Calculates distance between two Cartesian coordinates using its Manhattan distance.
+     *
+     * @param a the source position
+     * @param b the destination position
+     * @return the Manhattan distance of the two coordinates
+     */
+    public static double calculateDistance(Position a, Position b) {
+        int dx = Math.abs(a.getX() - b.getX());
+        int dy = Math.abs(a.getY() - b.getY());
+
+        return dx + dy;
+    }
+
+    /**
      * Returns the immediate tiles in the cardinal directions of the source tile.
      *
      * @param source the source node/tile to get the neighbors of
@@ -127,43 +159,11 @@ public class Board {
         int y = source.getPosition().getY();
 
         Tile[] tiles = {
-                this.tileAt(this.normalize(x - 1, y)), this.tileAt(this.normalize(x + 1, y)),
-                this.tileAt(this.normalize(x, y - 1)), this.tileAt(this.normalize(x, y + 1))
+                this.tileAt(Board.normalize(x - 1, y)), this.tileAt(Board.normalize(x + 1, y)),
+                this.tileAt(Board.normalize(x, y - 1)), this.tileAt(Board.normalize(x, y + 1))
         };
 
         return tiles;
-    }
-
-    public Tile[] tilesAround(int x, int y) {
-        return this.tilesAround(this.tileAt(y, x));
-    }
-
-    /**
-     * Normalizes Cartesian coordinates based on board dimensions.
-     *
-     * @param x the x coordinate of the position
-     * @param y the y coordinate of the position
-     * @return the normalized Position
-     */
-    public Position normalize(int x, int y) {
-        int normalizedX = x < Constants.WIDTH && x > -1 ? x : x > Constants.WIDTH ? x - Constants.WIDTH : Constants.WIDTH + x;
-        int normalizedY = y < Constants.HEIGHT && y > -1 ? y : y > Constants.HEIGHT ? y - Constants.HEIGHT : Constants.HEIGHT + y;
-
-        return new Position(normalizedX, normalizedY);
-    }
-
-    /**
-     * Calculates distance between two Cartesian coordinates using its Manhattan distance.
-     *
-     * @param a the source position
-     * @param b the destination position
-     * @return the Manhattan distance of the two coordinates
-     */
-    public double calculateDistance(Position a, Position b) {
-        int dx = Math.abs(a.getX() - b.getX());
-        int dy = Math.abs(a.getY() - b.getY());
-
-        return dx + dy;
     }
 
     /**
@@ -176,8 +176,8 @@ public class Board {
     public Tile naiveNavigate(Tile source, Tile destination) {
         Tile[] neighbors = this.tilesAround(source);
 
-        Arrays.sort(neighbors, (Tile a, Tile b) -> (int) (calculateDistance(a.getPosition(), destination.getPosition()) -
-                calculateDistance(b.getPosition(), destination.getPosition())));
+        Arrays.sort(neighbors, (Tile a, Tile b) -> (int) (Board.calculateDistance(a.getPosition(), destination.getPosition()) -
+                Board.calculateDistance(b.getPosition(), destination.getPosition())));
 
         return neighbors[0];
     }
@@ -215,7 +215,7 @@ public class Board {
      */
     public void move(int row, int col, char content, Entity entity) {
         Position currentPos = entity.getPosition();
-        Position newPos = normalize(row, col);
+        Position newPos = Board.normalize(row, col);
 
         entity.setPosition(newPos);
         this.tileAt(currentPos).setContent(' ');
