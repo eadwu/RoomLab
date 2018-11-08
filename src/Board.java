@@ -124,8 +124,8 @@ public class Board {
      * @return the normalized Position
      */
     public static Position normalize(int x, int y) {
-        int normalizedX = x < Constants.WIDTH && x > -1 ? x : x > Constants.WIDTH ? x - Constants.WIDTH : Constants.WIDTH + x;
-        int normalizedY = y < Constants.HEIGHT && y > -1 ? y : y > Constants.HEIGHT ? y - Constants.HEIGHT : Constants.HEIGHT + y;
+        int normalizedX = x < Constants.WIDTH && x > -1 ? x : x >= Constants.WIDTH ? x - Constants.WIDTH : Constants.WIDTH + x;
+        int normalizedY = y < Constants.HEIGHT && y > -1 ? y : y >= Constants.HEIGHT ? y - Constants.HEIGHT : Constants.HEIGHT + y;
 
         return new Position(normalizedX, normalizedY);
     }
@@ -262,7 +262,8 @@ public class Board {
                 dx = -1;
         }
 
-        this.move(currentPos.getX() + dx, currentPos.getY() + dy, content, entity);
+        Position normalizedPosition = normalize(currentPos.getX() + dx, currentPos.getY() + dy);
+        this.move(normalizedPosition.getX(), normalizedPosition.getY(), content, entity);
     }
 
     /**
